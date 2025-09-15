@@ -42,6 +42,7 @@ A few data sets that are used throughout the examples are included here in the r
 All datasets can be found in the corresponding [zenodo repository](https://doi.org/10.5281/zenodo.14750286). Create a folder `data`
 ```shell script
 mkdir data
+cd data
 mkdir md22
 ```
 Download one of the pre-processed files, e.g., `AcAla3NHMe_preprocessed.npz` and put to `data/md22`.
