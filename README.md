@@ -51,7 +51,7 @@ We provide a script for training on MD17, MD22, 3BPA, the BIGDML materials data 
 for AcAla3NHMe from the MD22 benchmark via the following command.
 ```shell script
 
-mkdir ~/git/euclidean_fast_attention/md22/AcAla3NHMe/efa"
+mkdir ~/git/euclidean_fast_attention/md22/AcAla3NHMe/efa
 
 python ~/git/euclidean_fast_attention/euclidean_fast_attention/main.py \
     --config ~/git/euclidean_fast_attention/euclidean_fast_attention/configs/config.py \
