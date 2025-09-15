@@ -263,45 +263,17 @@ class EuclideanFastAttention(nn.Module):
                     f'lattice_vectors must have shape (num_graphs, 3, 3). '
                     f'Received {lattice_vectors.shape}.'
                 )
-            # Lattice vectors are a special case of a grid with M = 3 grid points.
-            # lattice_vectors_fs = jnp.concatenate([lattice_vectors, -lattice_vectors], axis=-2)  # (num_graphs, 6, 3)
-            with jax.ensure_compile_time_eval():
-                k_vectors = jnp.array(get_kmax(Nxmax=1, Nymax=1, Nzmax=1))  # (M, 3)
-            
-            lv_norm = e3x.ops.norm(lattice_vectors, axis=-1, keepdims=True)
+
+            grid_u = lattice_vectors[batch_segments] # (N, M, 3)
+            lv_norm = e3x.ops.norm(grid_u, axis=-1, keepdims=True)
             lv_norm = jnp.where(lv_norm > 1e-4, lv_norm, 1.0)
-            lattice_vectors = lattice_vectors / lv_norm
+            grid_u = grid_u / lv_norm
             
-            grid_u = jnp.einsum('gid, mi -> gmd', lattice_vectors, k_vectors)  # (num_graphs, M, 3)
-            grid_u = grid_u[batch_segments]  # (N, M, 3)
-            
-            grid_w = 1 * jnp.ones(
+            grid_w = 1/grid_u.shape[1] * jnp.ones(
                 (grid_u.shape[1], ),
                 dtype=grid_u.dtype
             ) # (3, )
-            if self.epe_frequencies_trainable:
-                frequencies = self.param(
-                    'pbc_frequencies',
-                    frequency_init_fn_pbc,
-                    q.shape[-1],
-                    lv_norm.max()
-                )
-            else:
-                frequencies = frequency_init_fn_pbc(None, q.shape[-1], lv_norm.max())
-            # grid_u = lattice_vectors[batch_segments] # (N, M, 3)
-            # lv_norm = e3x.ops.norm(grid_u, axis=-1, keepdims=True)
-            # lv_norm = jnp.where(lv_norm > 1e-4, lv_norm, 1.0)
-            # grid_u = grid_u / lv_norm
-            
-            # grid_w = 1/grid_u.shape[1] * jnp.ones(
-            #     (grid_u.shape[1], ),
-            #     dtype=grid_u.dtype
-            # ) # (3, )
 
-            # coeff = jnp.linspace((1 / q.shape[-1])**(1/2), 0.0, q.shape[-1], endpoint=False)
-
-            # q = q * coeff * jnp.sqrt(q.shape[-1])
-            # k = k * coeff
         else:
             # Lebedev grid.
             with jax.ensure_compile_time_eval():
@@ -309,27 +281,27 @@ class EuclideanFastAttention(nn.Module):
                     num=self.lebedev_num
                 ) # (M, 3), (M, )
 
-            # If frequencies are trainable, initialize them as params.
-            if self.epe_frequencies_trainable:
-                frequencies = self.param(
-                    "frequencies",
-                    self.epe_frequencies_init_fn,
-                    self.epe_num_frequencies,
-                    num_features_qk,
-                    self.epe_max_frequency,
-                    self.epe_max_length,
-                    self.param_dtype,
-                )
-            # Otherwise just call the init function for the frequencies.
-            else:
-                frequencies = self.epe_frequencies_init_fn(
-                    None,  # no RNG key needed.
-                    self.epe_num_frequencies,
-                    num_features_qk,
-                    self.epe_max_frequency,
-                    self.epe_max_length,
-                    self.param_dtype,
-                )
+        # If frequencies are trainable, initialize them as params.
+        if self.epe_frequencies_trainable:
+            frequencies = self.param(
+                "frequencies",
+                self.epe_frequencies_init_fn,
+                self.epe_num_frequencies,
+                num_features_qk,
+                self.epe_max_frequency,
+                self.epe_max_length,
+                self.param_dtype,
+            )
+        # Otherwise just call the init function for the frequencies.
+        else:
+            frequencies = self.epe_frequencies_init_fn(
+                None,  # no RNG key needed.
+                self.epe_num_frequencies,
+                num_features_qk,
+                self.epe_max_frequency,
+                self.epe_max_length,
+                self.param_dtype,
+            )
 
         # Perform the linear scaling attention aggregation.
         beta = rope.apply(

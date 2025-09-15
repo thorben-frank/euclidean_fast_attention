@@ -343,3 +343,97 @@ def place_atoms_in_sphere(
             break
 
     return placed_types, placed_positions
+
+
+
+def place_atoms_in_cube(
+    L, 
+    n_total,
+):
+    """
+    Randomly places Na and Cl atoms in a cube with periodic boundary conditions,
+    returning separate arrays for atomic numbers and positions.
+
+    Args:
+        L (float): The side length of the cubic box.
+        n_total (int): The total number of atoms.
+
+    Returns:
+        tuple: A tuple containing two NumPy arrays:
+               - atomic_numbers (np.ndarray): An array of atomic numbers (11 for Na, 17 for Cl).
+               - atomic_positions (np.ndarray): An Nx3 array of atom coordinates.
+    """
+    
+    # --- Atom Type and Count Setup (similar to original code) ---
+    n_na = n_total // 2
+    n_cl = n_total - n_na
+    
+    # # Randomly introduce a small charge imbalance if desired
+    # if n_total % 2 == 0:
+    #     offset = np.random.randint(low=-1, high=2)
+    # else:
+    #     offset = np.random.randint(low=0, high=2)
+    
+    # n_na += offset
+    # n_cl -= offset
+
+    # Define atomic radii for collision checks (Na: 11, Cl: 17)
+    # Using an array for direct indexing by atomic number
+    atom_radii = np.zeros((18, )) # Max atomic number is 17
+    atom_radii[11] = 0.95*0.5  # Na radius
+    atom_radii[17] = 1.81*0.5  # Cl radius
+
+    atoms_to_place = [11] * n_na + [17] * n_cl
+    np.random.shuffle(atoms_to_place)
+
+    # --- Atom Placement Loop ---
+    placed_types = np.zeros(n_total, dtype=int)
+    placed_positions = np.zeros((n_total, 3), dtype=float)
+    n_placed = 0
+
+    max_attempts_per_atom = 1000 * n_total
+
+    for atomic_number in atoms_to_place:
+        is_placed = False
+        for _ in range(max_attempts_per_atom):
+            # Generate a random position inside the cube (centered at origin)
+            pos = np.random.uniform(-L / 2.0, L / 2.0, 3)
+
+            # Check for collisions with already placed atoms
+            if n_placed == 0:
+                has_collision = False
+            else:
+                # Get types and positions of atoms already in the box
+                compare_types = placed_types[:n_placed]
+                compare_positions = placed_positions[:n_placed]
+                
+                # Calculate the vector distance
+                delta = compare_positions - pos
+                
+                # Apply periodic boundary conditions (minimum image convention)
+                # This "wraps around" the box to find the shortest distance
+                delta = delta - L * np.round(delta / L)
+                
+                # Calculate squared distances from the new atom to all others
+                dists_sq = np.sum(delta ** 2, axis=1)
+                
+                # Calculate the minimum allowed squared distance (r1 + r2)^2
+                min_dists_sq = (atom_radii[compare_types] + atom_radii[atomic_number])**2
+                
+                # A collision occurs if any squared distance is less than the minimum allowed
+                has_collision = np.any(dists_sq < min_dists_sq)
+
+            if not has_collision:
+                placed_types[n_placed] = atomic_number
+                placed_positions[n_placed] = pos
+                n_placed += 1
+                is_placed = True
+                break
+        
+        if not is_placed:
+            print(f"⚠️ Warning: Could not place an atom of type {atomic_number} after {max_attempts_per_atom} attempts.")
+            print(f"Stopping placement. Successfully placed {n_placed} out of {n_total} atoms.")
+            # Return only the atoms that were successfully placed
+            return placed_types[:n_placed], placed_positions[:n_placed]
+
+    return placed_types, placed_positions
