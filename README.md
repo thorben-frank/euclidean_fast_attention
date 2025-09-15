@@ -39,7 +39,36 @@ EFA block to reproduce the results from the paper.
 
 ### Datasets
 A few data sets that are used throughout the examples are included here in the repository under the `datasets` folder.
-All datasets can be found in the corresponding [zenodo repository](https://doi.org/10.5281/zenodo.14750286).  
+All datasets can be found in the corresponding [zenodo repository](https://doi.org/10.5281/zenodo.14750286). Create a folder `data`
+```shell script
+mkdir data
+mkdir md22
+```
+Download one of the pre-processed files, e.g., `AcAla3NHMe_preprocessed.npz` and put to `data/md22`.
+
+### Training and Evaluation
+We provide a script for training on MD17, MD22, 3BPA, the BIGDML materials data set and the 4GHDNNP benchmark. For example, you can start training 
+for AcAla3NHMe from the MD22 benchmark via the following command.
+```shell script
+
+mkdir ~/git/euclidean_fast_attention/md22/AcAla3NHMe/efa"
+
+python ~/git/euclidean_fast_attention/euclidean_fast_attention/main.py \
+    --config ~/git/euclidean_fast_attention/euclidean_fast_attention/configs/config.py \
+    --config.wandb.group AcAla3NHMe_base_model \
+    --config.wandb.name "efa" \
+    --optimizer_config ~/git/euclidean_fast_attention/euclidean_fast_attention/configs/optimizer/default.py \
+    --optimizer_config.clip_by_global_norm 15.0 \
+    --model_config ~/git/euclidean_fast_attention/euclidean_fast_attention/configs/model/md22_base_model.py:AcAla3NHMe \
+    --trainer_config ~/git/euclidean_fast_attention/euclidean_fast_attention/configs/trainer/md22_AcAla3NHMe.py:5 \
+    --trainer_config.datafile "~/git/euclidean_fast_attention/data/md22/AcAla3NHMe_preprocessed.npz" \
+    --trainer_config.energy_weight 0.001 \
+    --trainer_config.forces_weight 0.999 \
+    --workdir ~/git/euclidean_fast_attention/md22/AcAla3NHMe/efa"
+
+```
+You can find the configs used for the other data sets and models at `git/euclidean_fast_attention/configs`.
+In the configs, there is the option `auto_eval` which if enabled calculates the metrics on the remaining test set data when training is finished.
 
 #### Citation
 If you find this repository useful or use the Euclidean fast attention algorithm in your research please
