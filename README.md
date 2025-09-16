@@ -39,13 +39,8 @@ EFA block to reproduce the results from the paper.
 
 ### Datasets
 A few data sets that are used throughout the examples are included here in the repository under the `datasets` folder.
-All datasets can be found in the corresponding [zenodo repository](https://doi.org/10.5281/zenodo.14750286). Create a folder `data`
-```shell script
-mkdir data
-cd data
-mkdir md22
-```
-Download one of the pre-processed files, e.g., `AcAla3NHMe_preprocessed.npz` and put to `data/md22`.
+All datasets can be found in the corresponding [zenodo repository](https://doi.org/10.5281/zenodo.14750286). Download the data and unpack to `${DATA_PATH}`.
+The structure will likely be `${DATA_PATH}/source_data/datasets/...`.
 
 ### Training and Evaluation
 We provide a script for training on MD17, MD22, 3BPA, the BIGDML materials data set and the 4GHDNNP benchmark. For example, you can start training 
@@ -62,7 +57,7 @@ python ~/git/euclidean_fast_attention/euclidean_fast_attention/main.py \
     --optimizer_config.clip_by_global_norm 15.0 \
     --model_config ~/git/euclidean_fast_attention/euclidean_fast_attention/configs/model/md22_base_model.py:AcAla3NHMe \
     --trainer_config ~/git/euclidean_fast_attention/euclidean_fast_attention/configs/trainer/md22_AcAla3NHMe.py:5 \
-    --trainer_config.datafile "~/git/euclidean_fast_attention/data/md22/AcAla3NHMe_preprocessed.npz" \
+    --trainer_config.datafile "${DATA_PATH}/source_data/datasets/md22/AcAla3NHMe_preprocessed.npz" \
     --trainer_config.energy_weight 0.001 \
     --trainer_config.forces_weight 0.999 \
     --workdir ~/git/euclidean_fast_attention/md22/AcAla3NHMe/efa"

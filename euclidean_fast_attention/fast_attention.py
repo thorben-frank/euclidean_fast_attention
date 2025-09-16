@@ -265,9 +265,6 @@ class EuclideanFastAttention(nn.Module):
                 )
 
             grid_u = lattice_vectors[batch_segments] # (N, M, 3)
-            lv_norm = e3x.ops.norm(grid_u, axis=-1, keepdims=True)
-            lv_norm = jnp.where(lv_norm > 1e-4, lv_norm, 1.0)
-            grid_u = grid_u / lv_norm
             
             grid_w = 1/grid_u.shape[1] * jnp.ones(
                 (grid_u.shape[1], ),
