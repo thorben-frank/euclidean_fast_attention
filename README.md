@@ -48,7 +48,7 @@ We provide a script for training on MD17, MD22, 3BPA, the BIGDML materials data 
 Here we show how to train the Au2MgO from the 4GHDNNP dataset. First create a folder where to save the training checkpoints
 ```shell script
 
-mkdir ~/git/euclidean_fast_attention/4gdhnnp/au2mgo/efa
+mkdir ~/git/euclidean_fast_attention/runs
 
 python ~/git/euclidean_fast_attention/euclidean_fast_attention/main.py \
     --config ~/git/euclidean_fast_attention/euclidean_fast_attention/configs/config.py \
@@ -58,7 +58,7 @@ python ~/git/euclidean_fast_attention/euclidean_fast_attention/main.py \
     --model_config ~/git/euclidean_fast_attention/euclidean_fast_attention/configs/model/4ghdnnp_base_model_pbc.py \
     --trainer_config ~/git/euclidean_fast_attention/euclidean_fast_attention/configs/trainer/4ghdnnp_AuMgO.py \
     --trainer_config.datafile "${DATA_PATH}/datasets/4ghdnnp/AuMgO_preprocessed.npz" \
-    --workdir ~/git/euclidean_fast_attention/4gdhnnp/au2mgo/efa
+    --workdir ~/git/euclidean_fast_attention/runs/4gdhnnp/aumgo/efa
 
 ```
 You can find the configs used for the other data sets and models at `git/euclidean_fast_attention/configs`.

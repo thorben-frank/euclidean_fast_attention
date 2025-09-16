@@ -26,7 +26,9 @@ def get_config():
     config.length_unit = units.Angstrom
     config.pbc_bool = False
     config.auto_eval = True
+    config.energy_weight = 0.01
+    config.forces_weight = 0.99
     config.subtract_energy_mean = False
-    config.neighbor_list_cutoff = 100.0  # important for dispersin module, since we only have one set of neighbor list indices at the moment
+    config.neighbor_list_cutoff = 100.0  # important for dispersion module, since we only have one set of neighbor list indices at the moment
 
     return config
