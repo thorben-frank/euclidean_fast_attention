@@ -34,9 +34,8 @@ pip install .
 
 #### Examples
 For example usages check the `examples/` folder. It contains an examples for basic usage of the `EuclideanFastAttention` 
-`flax` module. Additionally, you can find examples on how to train an O(3) equivariant MPNN with enabled / disabled 
-EFA block to reproduce the results from the paper. Moreover, there are notebooks to train the models for the NaCl cluster systems
-and the EFA energy predictor.
+`flax` module. There are notebooks to train the models for the NaCl cluster systems and the EFA energy predictor and also a notebook 
+which shows how to obtain energy scans from trained models.
 
 ### Datasets
 A few data sets that are used throughout the examples are included here in the repository under the `datasets` folder.

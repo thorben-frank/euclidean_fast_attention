@@ -9,7 +9,7 @@ import pytest
 
 from euclidean_fast_attention import rope
 
-jax.config.update('jax_default_matmul_precision', 'float32')
+jax.config.update('jax_default_matmul_precision', 'highest')
 
 
 @pytest.mark.parametrize("num_nodes", [10])

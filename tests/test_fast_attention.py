@@ -9,6 +9,8 @@ import pytest
 
 from euclidean_fast_attention import fast_attention
 
+jax.config.update('jax_default_matmul_precision', 'highest')
+
 
 @pytest.mark.parametrize("include_pseudotensors_inputs", [True, False])
 @pytest.mark.parametrize("include_pseudotensors_qk", [True, False, None])
