@@ -28,7 +28,6 @@ def get_config():
     config.era_qk_num_features = None
     config.era_v_num_features = None
     config.num_post_residual_mlps = 0
-    config.use_switch = False
     config.iterated_tensor_products = False
     config.dispersion_correction_bool = True
     

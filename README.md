@@ -44,7 +44,7 @@ All datasets can be found in the corresponding [zenodo repository](https://doi.o
 The structure should then be `${DATA_PATH}/datasets/...`.
 
 ### Training and Evaluation
-We provide a script for training on MD17, MD22, 3BPA, the BIGDML materials data set and the 4GHDNNP benchmark. 
+We provide a script for training on SN2, dimers, cumulene, MD17, MD22, 3BPA, the BIGDML materials data set and the 4GHDNNP benchmark. 
 Here we show how to train the Au2MgO from the 4GHDNNP dataset. First create a folder where to save the training checkpoints
 ```shell script
 
@@ -61,7 +61,8 @@ python ~/git/euclidean_fast_attention/euclidean_fast_attention/main.py \
     --workdir ~/git/euclidean_fast_attention/runs/4gdhnnp/aumgo/efa
 
 ```
-You can find the configs used for the other data sets and models at `git/euclidean_fast_attention/configs`.
+Parameters can either be changed in the config directly, or via the command line. I.e., adding `--model_config.era_use_in_iterations=""` will result 
+in a local model that does not use EFA. You can find the configs files used for the other data sets and models at `git/euclidean_fast_attention/configs`.
 In the configs, there is the option `auto_eval` which if enabled calculates the metrics on the remaining test set data when training is finished.
 
 #### Citation

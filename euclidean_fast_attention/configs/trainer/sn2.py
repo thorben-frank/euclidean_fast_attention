@@ -16,7 +16,7 @@ def get_config():
     config.split_seed = 0
     config.model_seed = 0
     config.max_num_nodes = 32 * 6 + 1
-    config.max_num_edges = 32 * 6 * 6 + 1
+    config.max_num_edges = 32 * 6 * 6 + 1  # consider fully connected graphs due to the dispersion module
     config.max_num_graphs = 32 + 1
     config.num_epochs = 500
     config.num_train_steps = None
@@ -29,6 +29,6 @@ def get_config():
     config.energy_weight = 0.01
     config.forces_weight = 0.99
     config.subtract_energy_mean = False
-    config.neighbor_list_cutoff = 100.0  # important for dispersion module, since we only have one set of neighbor list indices at the moment
+    config.neighbor_list_cutoff = None
 
     return config

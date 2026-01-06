@@ -18,7 +18,7 @@ def get_config():
     config.mp_num_basis_fn = 32
     config.radial_basis_fn = 'exponential_bernstein'
     config.emulate_era_block = False
-    config.era_use_in_iterations = "0 1"
+    config.era_use_in_iterations = "0 1" # set to empty string "" to disable EFA
     config.era_max_degree = 0
     config.era_include_pseudotensors = False
     config.era_activation_fn = "gelu"
