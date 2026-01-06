@@ -16,7 +16,7 @@ def get_config():
     config.split_seed = 0
     config.model_seed = 0
     config.max_num_nodes = 1 * 27 + 1
-    config.max_num_edges = 1 * 27 * 20 + 1
+    config.max_num_edges = 1 * 27 * 25 + 1
     config.max_num_graphs = 1 + 1
     config.num_epochs = None
     config.num_train_steps = 1_000_000

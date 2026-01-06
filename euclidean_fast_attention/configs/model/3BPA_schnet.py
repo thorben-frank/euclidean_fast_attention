@@ -13,7 +13,7 @@ def get_config():
     
     # Model Architecture Parameters
     config.num_layers = 3
-    config.num_features = 256  # 290 for local model
+    config.num_features = 280  # 290 for local model
 
     # Interaction Parameters
     config.cutoff = 5.0
@@ -29,12 +29,12 @@ def get_config():
     config.use_efa_block = True
     config.emulate_efa_block = False
     config.era_max_length = 11.0
-    config.era_max_frequency = float(3*np.pi)
+    config.era_max_frequency = float(np.pi)
     config.era_qk_num_features = 16
     config.era_v_num_features = 32
     config.era_lebedev_num = 146
     config.era_activation_fn = 'identity'
-    config.efa_block_skip_in_final_layer_bool = False
+    config.efa_block_skip_in_final_layer_bool = True
     config.efa_block_layer_normalization_bool = False
     config.efa_block_behaves_like_identity_at_init = True
     config.efa_block_mlp_hidden_features = 64
