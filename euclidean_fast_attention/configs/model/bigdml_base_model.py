@@ -13,9 +13,9 @@ def get_config():
     config.name = 'base_model'
     config.cutoff = 4.0  # in Angstrom
     config.num_features = 128
-    config.num_layers = 2
+    config.num_layers = 3
     config.mp_max_degree = 2
-    config.mp_num_basis_fn = 32
+    config.mp_num_basis_fn = 64
     config.radial_basis_fn = 'exponential_bernstein'
     config.emulate_era_block = False
     config.era_use_in_iterations = "0 1" # set to empty string "" to disable EFA
