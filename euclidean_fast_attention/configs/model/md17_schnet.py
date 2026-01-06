@@ -17,7 +17,7 @@ def get_config():
     config.num_features = 256  # 290 for local model
 
     # Interaction Parameters
-    config.cutoff = 4.0
+    config.cutoff = 5.0
     
     # Radial Basis Function Parameters
     config.radial_basis_fn = 'exponential_bernstein'
