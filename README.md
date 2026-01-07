@@ -1,6 +1,7 @@
 ![workflow-test-ci](https://github.com/thorben-frank/euclidean_fast_attention/actions/workflows/CI.yml/badge.svg)
 [![preprint-link](https://img.shields.io/badge/paper-arxiv.org-B31B1B)](https://arxiv.org/abs/2412.08541)
 [![Data](https://zenodo.org/badge/DOI/10.5281/zenodo.17130729.svg)](https://doi.org/10.5281/zenodo.17130729)
+[![DOI](https://zenodo.org/badge/900784126.svg)](https://doi.org/10.5281/zenodo.18171623)
 
 ![Logo](overview.png)
 
