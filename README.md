@@ -1,12 +1,12 @@
 ![workflow-test-ci](https://github.com/thorben-frank/euclidean_fast_attention/actions/workflows/CI.yml/badge.svg)
 [![preprint-link](https://img.shields.io/badge/paper-arxiv.org-B31B1B)](https://arxiv.org/abs/2412.08541)
-[![Datasets](https://zenodo.org/badge/DOI/10.5281/zenodo.17130729.svg)](https://zenodo.org/records/17130729)
+[![Data](https://zenodo.org/badge/DOI/10.5281/zenodo.17130729.svg)](https://doi.org/10.5281/zenodo.17130729)
 
 ![Logo](overview.png)
 
 ### Euclidean Fast Attention
-Reference implementation of the Euclidean fast attention (EFA) algorithm, presented in the paper 
-[*Euclidean Fast Attention: Machine Learning Global Atomic Representations at Linear Cost*](https://arxiv.org/abs/2412.08541).
+Reference implementation of the Euclidean fast attention (EFA) algorithm, presented in the Nature Machine Intelligence paper 
+[*Machine Learning Global Atomic Representations with Euclidean Fast Attention*](https://arxiv.org/abs/2412.08541).
 #### Installation
 The code in this repository can be either used with CPU or with GPU. If you want to use GPU, you have to install the 
 corresponding JAX installation via 
