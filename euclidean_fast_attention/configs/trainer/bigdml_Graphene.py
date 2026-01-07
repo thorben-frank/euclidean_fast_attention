@@ -19,7 +19,7 @@ def get_config():
     config.max_num_edges = 4 * 50 * 25 + 1
     config.max_num_graphs = 4 + 1
     config.num_epochs = None
-    config.num_train_steps = 250_000
+    config.num_train_steps = 500_000
     config.save_interval_steps = 5000
     config.log_loss_every_steps = 500
     config.energy_unit = units.eV

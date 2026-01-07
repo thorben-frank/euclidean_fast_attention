@@ -23,7 +23,7 @@ def get_config():
     config.era_include_pseudotensors = False
     config.era_activation_fn = "gelu"
     config.era_num_frequencies = None
-    config.era_max_frequency = float(np.pi / 4)
+    config.era_max_frequency = float(np.pi/4)
     config.era_max_length = 1.0
     config.era_lebedev_num = None
     config.era_qk_num_features = 16
